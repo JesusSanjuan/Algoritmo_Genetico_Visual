@@ -120,6 +120,14 @@ namespace Algoritmo_Genetico_Visual1
                     break;
                 }
                 Console.WriteLine("\tGeneracion: {0} , Convergencia del: {1}\n", i, porcentajeconvergencia);
+
+
+
+                chart1.Series["Series1"].Points.AddXY(i, porcentajeconvergencia);
+
+
+
+
                 i = i + 1;
             } while (porcentajeconvergencia < (double)99.9);
             tiempo.Stop();
