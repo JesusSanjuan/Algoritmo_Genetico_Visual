@@ -19,35 +19,38 @@ namespace Algoritmo_Genetico_Visual1
         }
 
         private void button1_Click(object sender, EventArgs e)
-        {
+        {          
+
             String inve, per, vss;
             double inversion, VS;
             int periodo;
-            Console.WriteLine("Introduzca la inversion (P):  ");
-            inve = Console.ReadLine();
-            Console.WriteLine("Introduzca el periodo (N) Meses: ");
-            per = Console.ReadLine();
-            Console.WriteLine("Introduzca el valor de salvamento: ");
-            vss = Console.ReadLine();
+            inve = inveTex.Text;
+            per = pertex.Text;
+            vss = vsstex.Text;
 
             double[] FNE = new double[Convert.ToInt32(per)];
 
-            for (int x = 0; x < Convert.ToInt32(per); x++)
+
+            FNE[0] = Convert.ToDouble(1000);
+            FNE[1] = Convert.ToDouble(3000);
+            FNE[2] = Convert.ToDouble(5000);
+           /* for (int x = 0; x < Convert.ToInt32(per); x++)
             {
                 Console.WriteLine("\tIntroduzca el FNE {0}: ", x + 1);
                 String temporal = Console.ReadLine();
                 FNE[x] = Convert.ToDouble(temporal);
-            }
+            }*/
 
             inversion = Convert.ToDouble(inve);
             periodo = Convert.ToInt32(per);
             VS = Convert.ToDouble(vss);
 
-            Console.WriteLine("\nIntroduzca la cantidad de la poblacion (Numeros pares >48):  ");
             String poblacionNumero;
-            poblacionNumero = Console.ReadLine();
+            poblacionNumero = poblacionNumeroTex.Text;
 
 
+            Resultados.Text = "\nAproximacion inicial encontrada";
+            Resultados.Text = Resultados.Text+"\n\n******************INICIO DE LA BUSQUEDA DE LA TIR.*****************\n\n";
 
             Console.WriteLine("\nAproximacion inicial encontrada");
             Console.WriteLine("\n\n******************INICIO DE LA BUSQUEDA DE LA TIR.*****************\n\n");
@@ -123,7 +126,7 @@ namespace Algoritmo_Genetico_Visual1
 
 
 
-                chart1.Series["Series1"].Points.AddXY(i, porcentajeconvergencia);
+                chart1.Series["Convergencia"].Points.AddXY(i, porcentajeconvergencia);
 
 
 
@@ -234,14 +237,13 @@ namespace Algoritmo_Genetico_Visual1
             poblacionMuestra = poblacion2[0];
             for (int x = 0; x < poblacionMuestra.Count; x++)
             {
-                Console.WriteLine("\n\t\t FNE Original {0}: {1}, FNE Opimizado {2}: {3}", x, poblacionMuestra[x], x, FNE[x]);
+                Console.WriteLine("\n\t\t FNE Original {0}: {1},          FNE Opimizado {2}: {3}", x, FNE[x] , x, poblacionMuestra[x]);
             }
             Console.WriteLine("\n\t\t\tRESULTADO TMAR: {0}", ResultadosFX2[0]);
             Console.WriteLine("\n\t\t\tRESULTADO TIR: {0}", resultTIR[0].Text);
             Console.WriteLine($"\n\t\t\tTiempo para la optimizacion de los FNE: {tiempofne.Elapsed.TotalSeconds} segundos");
             Console.WriteLine("********RESULTADOS DE LA OPTIMIZACION DE LOS FNE********");
             /*IMPRIMIENDO RESULTADOS FINALES*/
-            Console.ReadKey();
         }
 
         /*MIENTRAS ARRIBA*/
@@ -693,6 +695,31 @@ namespace Algoritmo_Genetico_Visual1
                 mutacionResultado.Add(poblaciontrabajo);
             }
             return mutacionResultado;
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Resultados_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label6_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void vsstex_TextChanged(object sender, EventArgs e)
+        {
+
         }
         /*Optimiazacion de  FLUJOS NETOS DE EFECTIVO*/
     }
