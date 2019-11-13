@@ -19,8 +19,8 @@ namespace Algoritmo_Genetico_Visual1
         }
 
         private void button1_Click(object sender, EventArgs e)
-        {          
-
+        {
+            Resultados.Text = "";
             String inve, per, vss;
             double inversion, VS;
             int periodo;
@@ -49,11 +49,10 @@ namespace Algoritmo_Genetico_Visual1
             poblacionNumero = poblacionNumeroTex.Text;
 
 
-            Resultados.Text = "\nAproximacion inicial encontrada";
-            Resultados.Text = Resultados.Text+"\n\n******************INICIO DE LA BUSQUEDA DE LA TIR.*****************\n\n";
+            Resultados.Text = "\r\nAproximacion inicial encontrada";
+            Resultados.Text = Resultados.Text+ "\r\n\n******************INICIO DE LA BUSQUEDA DE LA TIR.*****************\r\n\n";
 
-            Console.WriteLine("\nAproximacion inicial encontrada");
-            Console.WriteLine("\n\n******************INICIO DE LA BUSQUEDA DE LA TIR.*****************\n\n");
+            List<double> porcentajeconvergenciagrafica = new List<double>();            
 
             Stopwatch tiempo = Stopwatch.StartNew();
 
@@ -73,7 +72,8 @@ namespace Algoritmo_Genetico_Visual1
                     poblacion.Add(numeroAleatorio);
                 }
             }
-
+            List<double> poblacionGrafica = new List<double>(poblacion);
+            
             int i = 1;
             double porcentajeconvergencia = 0;
             double porcentaje = (((double)100) / Int32.Parse(poblacionNumero));
@@ -122,30 +122,43 @@ namespace Algoritmo_Genetico_Visual1
                     }
                     break;
                 }
-                Console.WriteLine("\tGeneracion: {0} , Convergencia del: {1}\n", i, porcentajeconvergencia);
-
-
-
-                chart1.Series["Convergencia"].Points.AddXY(i, porcentajeconvergencia);
-
-
-
-
+                Resultados.Text = Resultados.Text + "\tGeneracion: " +i+" , Convergencia del: "+ porcentajeconvergencia + "\r\n";
+               // Console.WriteLine("\tGeneracion: {0} , Convergencia del: {1}\n", i, porcentajeconvergencia);                
+                porcentajeconvergenciagrafica.Add(porcentajeconvergencia);
                 i = i + 1;
             } while (porcentajeconvergencia < (double)99.9);
             tiempo.Stop();
-            Console.WriteLine("\n******************CONCLUIDA LA BUSQUEDA DE LA TIR.*****************");
+
+            chart1.Series["Convergencia"].Points.Clear();
+            chart1.ChartAreas[0].AxisX.Title = "Generaciones";
+            chart1.ChartAreas[0].AxisY.Title = "Porcentaje de Convergencia";            
+            for (int a=0; a<porcentajeconvergenciagrafica.Count;a++)
+            {
+                chart1.Series["Convergencia"].Points.AddXY(a, porcentajeconvergenciagrafica[a]);
+            }
+            chart2.Series["Poblacion Inicial"].Points.Clear();
+            chart2.Series["Poblacion Final"].Points.Clear();
+            chart2.ChartAreas[0].AxisX.Title = "Numero Cromosoma";
+            chart2.ChartAreas[0].AxisY.Title = "Valor de Cromosoma";
+            for (int a = 0; a < Int32.Parse(poblacionNumero); a++)
+            {
+                chart2.Series["Poblacion Inicial"].Points.AddXY(a, poblacionGrafica[a]);
+                chart2.Series["Poblacion Final"].Points.AddXY(a, poblacion[a]);
+            }
+
+            Resultados.Text = Resultados.Text + "\r\n******************CONCLUIDA LA BUSQUEDA DE LA TIR.*****************";
             var resultTIR = poblacion.GroupBy(x => x).Select(g => new { Text = g.Key, Count = g.Count() }).ToList();
             resultTIR = resultTIR.OrderByDescending(o => o.Count).ToList();
 
             var resultTMR = ResultadosFX.GroupBy(x => x).Select(g => new { Text = g.Key, Count = g.Count() }).ToList();
             resultTMR = resultTMR.OrderByDescending(o => o.Count).ToList();
 
-
-
-            Console.WriteLine("\n\n******************INICIO DE OPTIMIZACION DE FNE.*******************\n\n");
+            ResultadosFNE.Text = Resultados.Text + "\r\n\r\n******************INICIO DE OPTIMIZACION DE FNE.*******************\r\n\r\n";
 
             /*Optimizacion de  FLUJOS NETOS DE EFECTIVO*/
+
+            List<double> porcentajeconvergenciagrafica2 = new List<double>();
+
             Stopwatch tiempofne = Stopwatch.StartNew();
             List<double> FNEList = FNE.ToList();
             double FNEMax = FNEList.Max();
@@ -166,6 +179,8 @@ namespace Algoritmo_Genetico_Visual1
                 }
                 poblacion2.Add(poblaciontem);
             }
+
+            List<List<double>> poblacionGrafica2 = new List<List<double>>(poblacion2);
 
             int j = 1;
             double porcentajeconvergencia2 = 0;
@@ -214,35 +229,71 @@ namespace Algoritmo_Genetico_Visual1
                     }
                     break;
                 }
-                Console.WriteLine("\tGeneracion: {0} , Convergencia del: {1}\n", j, porcentajeconvergencia2);
+                ResultadosFNE.Text = Resultados.Text + "\tGeneracion: " + j + " , Convergencia del: " + porcentajeconvergencia2 + "\r\n";
                 j = j + 1;
+                porcentajeconvergenciagrafica2.Add(porcentajeconvergencia2);
             } while (porcentajeconvergencia2 < (double)99.9);
             tiempofne.Stop();
-            Console.WriteLine("\n******************FINALIZACION DE OPTIMIZACION DE FNE.*******************\n\n");
+            ResultadosFNE.Text = Resultados.Text + "\r\n******************FINALIZACION DE OPTIMIZACION DE FNE.*******************\r\n\r\n";
             /*Optimiazacion de  FLUJOS NETOS DE EFECTIVO*/
+            
+            /* error*/
+            chart4.Series["Convergencia"].Points.Clear();
+            chart4.ChartAreas[0].AxisX.Title = "Generaciones";
+            chart4.ChartAreas[0].AxisY.Title = "Porcentaje de Convergencia";
+            for (int a = 0; a < porcentajeconvergenciagrafica2.Count; a++)
+            {
+                chart1.Series["Convergencia"].Points.AddXY(a, porcentajeconvergenciagrafica2[a]);
+            }
+            
+            chart3.Series["Poblacion Inicial"].Points.Clear();
+            chart3.Series["Poblacion Final"].Points.Clear();
+            chart3.ChartAreas[0].AxisX.Title = "Numero Cromosoma";
+            chart3.ChartAreas[0].AxisY.Title = "Valor de Cromosoma";
+            for (int a = 0; a < Int32.Parse(poblacionNumero); a++)
+            {
+                 List<double> temporal = new List<double>();
+                temporal=poblacionGrafica2[a];
+                for (int b = 0; b < temporal.Count; b++)
+                {
+                    switch(b)
+                    {
+                        case 0:
+                            chart3.Series["Poblacion Inicial"].Points.AddXY(a, temporal[a]);
+                            break;
+                        case 1:
+                            chart3.Series["Poblacion Inicial"].Points.AddXY(a, temporal[a]);
+                            break;
+                        case 2:
+                            chart3.Series["Poblacion Inicial"].Points.AddXY(a, temporal[a]);
+                            break;
+                    }
+                    
+                }                
+                chart3.Series["Poblacion Final"].Points.AddXY(a, poblacion2[a]);
+            }/* error*/
 
             /*IMPRIMIENDO RESULTADOS FINALES*/
-            Console.WriteLine("********RESULTADOS DE LA BUSQUEDA DE LA TIR*************");
-            Console.WriteLine("\tAproximacion inicial es: {0}\n", aproxInicial);
-            Console.WriteLine("\n\tTotal de Generaciones del calculo de la TIR: {0} , Convergencia del: {1}", i, porcentajeconvergencia);
-            Console.WriteLine("\n\t\t RESULTADO TMAR: {0}", resultTMR[0].Text);
-            Console.WriteLine("\n\t\t RESULTADO TIR: {0}", resultTIR[0].Text);
-            Console.WriteLine($"\n\t\t\tTiempo para la busqueda de la TIR y TMAR: {tiempo.Elapsed.TotalSeconds} segundos");
-            Console.WriteLine("********RESULTADOS DE LA BUSQUEDA DE LA TIR*************");
+            Resultados.Text = Resultados.Text + "********RESULTADOS DE LA BUSQUEDA DE LA TIR*************";
+            Resultados.Text = Resultados.Text + "\r\n\tAproximacion inicial es:" + aproxInicial + "\r\n";
+            Resultados.Text = Resultados.Text + "\tTotal de Generaciones: " + i + " , Convergencia del: " + porcentajeconvergencia;
+            Resultados.Text = Resultados.Text + "\r\n\r\n\t\t RESULTADO TMAR: " + resultTMR[0].Text;
+            Resultados.Text = Resultados.Text + "\r\n\t\t RESULTADO TIR: " + resultTIR[0].Text;
+            Resultados.Text = Resultados.Text + $"\r\n\r\n\t\t\tTiempo para la busqueda de la TIR y TMAR: {tiempo.Elapsed.TotalSeconds} segundos";
+            Resultados.Text = Resultados.Text + "\r\n\r\n********RESULTADOS DE LA BUSQUEDA DE LA TIR*************";
 
-            Console.WriteLine("\n\n********RESULTADOS DE LA OPTIMIZACION DE LOS FNE************");
-            Console.WriteLine("\tTotal de Generaciones para la optimizacion de los FNE: {0} , Convergencia del: {1}\n", j, porcentajeconvergencia2);
-            Console.WriteLine("\n\t RESULTADOS DE LA OPTIMIZACION DE LOS FNE\n");
+            ResultadosFNE.Text = Resultados.Text + "\r\n\r\n********RESULTADOS DE LA OPTIMIZACION DE LOS FNE************";
+            ResultadosFNE.Text = Resultados.Text + "\r\n\r\n\tTotal de Generaciones: " + j + " , Convergencia del: " + porcentajeconvergencia2 + "\r\n";
             List<double> poblacionMuestra = new List<double>();
             poblacionMuestra = poblacion2[0];
             for (int x = 0; x < poblacionMuestra.Count; x++)
             {
-                Console.WriteLine("\n\t\t FNE Original {0}: {1},          FNE Opimizado {2}: {3}", x, FNE[x] , x, poblacionMuestra[x]);
+                Resultados.Text = Resultados.Text + "\r\n\t\t FNE   Original " + x+": "+FNE[x]+ ",          FNE Opimizado " + x + ": "+ poblacionMuestra[x];
             }
-            Console.WriteLine("\n\t\t\tRESULTADO TMAR: {0}", ResultadosFX2[0]);
-            Console.WriteLine("\n\t\t\tRESULTADO TIR: {0}", resultTIR[0].Text);
-            Console.WriteLine($"\n\t\t\tTiempo para la optimizacion de los FNE: {tiempofne.Elapsed.TotalSeconds} segundos");
-            Console.WriteLine("********RESULTADOS DE LA OPTIMIZACION DE LOS FNE********");
+            ResultadosFNE.Text = Resultados.Text + "\r\n\r\n\t\t\tRESULTADO TMAR: " + ResultadosFX2[0];
+            ResultadosFNE.Text = Resultados.Text + "\r\n\t\t\tRESULTADO TIR: "+ resultTIR[0].Text;
+            ResultadosFNE.Text = Resultados.Text + $"\r\n\r\n\t\t\tTiempo para la optimizacion de los FNE: {tiempofne.Elapsed.TotalSeconds} segundos";
+            ResultadosFNE.Text = Resultados.Text + "\r\n\r\n********RESULTADOS DE LA OPTIMIZACION DE LOS FNE********";
             /*IMPRIMIENDO RESULTADOS FINALES*/
         }
 
@@ -718,6 +769,22 @@ namespace Algoritmo_Genetico_Visual1
         }
 
         private void vsstex_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Resultados_TextChanged(object sender, EventArgs e)
+        {
+            Resultados.SelectionStart = Resultados.Text.Length;
+            Resultados.ScrollToCaret();
+        }
+
+        private void label8_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label10_Click(object sender, EventArgs e)
         {
 
         }
