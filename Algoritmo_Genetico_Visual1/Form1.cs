@@ -328,7 +328,7 @@ namespace Algoritmo_Genetico_Visual1
             poblacionMuestra = poblacion2[0];
             for (int x = 0; x < poblacionMuestra.Count; x++)
             {
-                Resultados.Text = Resultados.Text + "\r\n\t\t FNE   Original " + x+": "+FNE[x]+ ",          FNE Opimizado " + x + ": "+ poblacionMuestra[x];
+                ResultadosFNE.Text = ResultadosFNE.Text + "\r\n\t\t FNE   Original " + x+": "+FNE[x]+ ",          FNE Opimizado " + x + ": "+ poblacionMuestra[x];
             }
             ResultadosFNE.Text = ResultadosFNE.Text + "\r\n\r\n\t\t\tRESULTADO TMAR: " + ResultadosFX2[0];
             ResultadosFNE.Text = ResultadosFNE.Text + "\r\n\t\t\tRESULTADO TIR: "+ resultTIR[0].Text;
