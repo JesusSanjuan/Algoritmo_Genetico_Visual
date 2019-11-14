@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Diagnostics;
+using System.Windows.Forms.DataVisualization.Charting;
 
 namespace Algoritmo_Genetico_Visual1
 {
@@ -21,6 +22,7 @@ namespace Algoritmo_Genetico_Visual1
         private void button1_Click(object sender, EventArgs e)
         {
             Resultados.Text = "";
+            ResultadosFNE.Text = "";
             String inve, per, vss;
             double inversion, VS;
             int periodo;
@@ -128,7 +130,7 @@ namespace Algoritmo_Genetico_Visual1
                 i = i + 1;
             } while (porcentajeconvergencia < (double)99.9);
             tiempo.Stop();
-
+            
             chart1.Series["Convergencia"].Points.Clear();
             chart1.ChartAreas[0].AxisX.Title = "Generaciones";
             chart1.ChartAreas[0].AxisY.Title = "Porcentaje de Convergencia";            
@@ -136,6 +138,7 @@ namespace Algoritmo_Genetico_Visual1
             {
                 chart1.Series["Convergencia"].Points.AddXY(a, porcentajeconvergenciagrafica[a]);
             }
+
             chart2.Series["Poblacion Inicial"].Points.Clear();
             chart2.Series["Poblacion Final"].Points.Clear();
             chart2.ChartAreas[0].AxisX.Title = "Numero Cromosoma";
@@ -153,7 +156,7 @@ namespace Algoritmo_Genetico_Visual1
             var resultTMR = ResultadosFX.GroupBy(x => x).Select(g => new { Text = g.Key, Count = g.Count() }).ToList();
             resultTMR = resultTMR.OrderByDescending(o => o.Count).ToList();
 
-            ResultadosFNE.Text = Resultados.Text + "\r\n\r\n******************INICIO DE OPTIMIZACION DE FNE.*******************\r\n\r\n";
+            ResultadosFNE.Text = ResultadosFNE.Text + "\r\n\r\n******************INICIO DE OPTIMIZACION DE FNE.*******************\r\n\r\n";
 
             /*Optimizacion de  FLUJOS NETOS DE EFECTIVO*/
 
@@ -229,49 +232,86 @@ namespace Algoritmo_Genetico_Visual1
                     }
                     break;
                 }
-                ResultadosFNE.Text = Resultados.Text + "\tGeneracion: " + j + " , Convergencia del: " + porcentajeconvergencia2 + "\r\n";
+                ResultadosFNE.Text = ResultadosFNE.Text + "\tGeneracion: " + j + " , Convergencia del: " + porcentajeconvergencia2 + "\r\n";
                 j = j + 1;
                 porcentajeconvergenciagrafica2.Add(porcentajeconvergencia2);
             } while (porcentajeconvergencia2 < (double)99.9);
             tiempofne.Stop();
-            ResultadosFNE.Text = Resultados.Text + "\r\n******************FINALIZACION DE OPTIMIZACION DE FNE.*******************\r\n\r\n";
+            ResultadosFNE.Text = ResultadosFNE.Text + "\r\n******************FINALIZACION DE OPTIMIZACION DE FNE.*******************\r\n\r\n";
             /*Optimiazacion de  FLUJOS NETOS DE EFECTIVO*/
             
-            /* error*/
+          
+
             chart4.Series["Convergencia"].Points.Clear();
             chart4.ChartAreas[0].AxisX.Title = "Generaciones";
             chart4.ChartAreas[0].AxisY.Title = "Porcentaje de Convergencia";
             for (int a = 0; a < porcentajeconvergenciagrafica2.Count; a++)
             {
-                chart1.Series["Convergencia"].Points.AddXY(a, porcentajeconvergenciagrafica2[a]);
+                chart4.Series["Convergencia"].Points.AddXY(a, porcentajeconvergenciagrafica2[a]);
             }
+
             
-            chart3.Series["Poblacion Inicial"].Points.Clear();
-            chart3.Series["Poblacion Final"].Points.Clear();
+
             chart3.ChartAreas[0].AxisX.Title = "Numero Cromosoma";
             chart3.ChartAreas[0].AxisY.Title = "Valor de Cromosoma";
+            for (int c = 0; c < periodo; c++)
+            {
+                try
+                {
+                    chart3.Series.Add("Cromosoma " + c);
+                    chart3.Series["Cromosoma " + c].ChartType = SeriesChartType.Point;
+                }
+                catch (System.ArgumentException ae)
+                {
+
+                }
+            }
+
+            for (int c = 0; c < periodo; c++)
+            {
+                chart3.Series["Cromosoma " + c].Points.Clear();
+            }
+
             for (int a = 0; a < Int32.Parse(poblacionNumero); a++)
             {
                  List<double> temporal = new List<double>();
                 temporal=poblacionGrafica2[a];
                 for (int b = 0; b < temporal.Count; b++)
                 {
-                    switch(b)
-                    {
-                        case 0:
-                            chart3.Series["Poblacion Inicial"].Points.AddXY(a, temporal[a]);
-                            break;
-                        case 1:
-                            chart3.Series["Poblacion Inicial"].Points.AddXY(a, temporal[a]);
-                            break;
-                        case 2:
-                            chart3.Series["Poblacion Inicial"].Points.AddXY(a, temporal[a]);
-                            break;
-                    }
-                    
+                    chart3.Series["Cromosoma " + b].Points.AddXY(a, temporal[b]);
+
                 }                
-                chart3.Series["Poblacion Final"].Points.AddXY(a, poblacion2[a]);
-            }/* error*/
+            }
+
+
+            for (int c = 0; c < periodo; c++)
+            {
+                try
+                {
+                    chart3.Series.Add("Cromosoma Optimo " + c);
+                    chart3.Series["Cromosoma Optimo " + c].ChartType = SeriesChartType.Point;
+                }
+                catch (System.ArgumentException ae)
+                {
+
+                }
+            }
+
+            for (int c = 0; c < periodo; c++)
+            {
+                chart3.Series["Cromosoma Optimo " + c].Points.Clear();
+            }
+
+            for (int a = 0; a < Int32.Parse(poblacionNumero); a++)
+            {
+                List<double> temporal2 = new List<double>();
+                temporal2 = poblacion2[a];
+                for (int b = 0; b < temporal2.Count; b++)
+                {
+                    chart3.Series["Cromosoma Optimo " + b].Points.AddXY(a, temporal2[b]);
+
+                }
+            }
 
             /*IMPRIMIENDO RESULTADOS FINALES*/
             Resultados.Text = Resultados.Text + "********RESULTADOS DE LA BUSQUEDA DE LA TIR*************";
@@ -282,18 +322,18 @@ namespace Algoritmo_Genetico_Visual1
             Resultados.Text = Resultados.Text + $"\r\n\r\n\t\t\tTiempo para la busqueda de la TIR y TMAR: {tiempo.Elapsed.TotalSeconds} segundos";
             Resultados.Text = Resultados.Text + "\r\n\r\n********RESULTADOS DE LA BUSQUEDA DE LA TIR*************";
 
-            ResultadosFNE.Text = Resultados.Text + "\r\n\r\n********RESULTADOS DE LA OPTIMIZACION DE LOS FNE************";
-            ResultadosFNE.Text = Resultados.Text + "\r\n\r\n\tTotal de Generaciones: " + j + " , Convergencia del: " + porcentajeconvergencia2 + "\r\n";
+            ResultadosFNE.Text = ResultadosFNE.Text + "\r\n\r\n********RESULTADOS DE LA OPTIMIZACION DE LOS FNE************";
+            ResultadosFNE.Text = ResultadosFNE.Text + "\r\n\r\n\tTotal de Generaciones: " + j + " , Convergencia del: " + porcentajeconvergencia2 + "\r\n";
             List<double> poblacionMuestra = new List<double>();
             poblacionMuestra = poblacion2[0];
             for (int x = 0; x < poblacionMuestra.Count; x++)
             {
                 Resultados.Text = Resultados.Text + "\r\n\t\t FNE   Original " + x+": "+FNE[x]+ ",          FNE Opimizado " + x + ": "+ poblacionMuestra[x];
             }
-            ResultadosFNE.Text = Resultados.Text + "\r\n\r\n\t\t\tRESULTADO TMAR: " + ResultadosFX2[0];
-            ResultadosFNE.Text = Resultados.Text + "\r\n\t\t\tRESULTADO TIR: "+ resultTIR[0].Text;
-            ResultadosFNE.Text = Resultados.Text + $"\r\n\r\n\t\t\tTiempo para la optimizacion de los FNE: {tiempofne.Elapsed.TotalSeconds} segundos";
-            ResultadosFNE.Text = Resultados.Text + "\r\n\r\n********RESULTADOS DE LA OPTIMIZACION DE LOS FNE********";
+            ResultadosFNE.Text = ResultadosFNE.Text + "\r\n\r\n\t\t\tRESULTADO TMAR: " + ResultadosFX2[0];
+            ResultadosFNE.Text = ResultadosFNE.Text + "\r\n\t\t\tRESULTADO TIR: "+ resultTIR[0].Text;
+            ResultadosFNE.Text = ResultadosFNE.Text + $"\r\n\r\n\t\t\tTiempo para la optimizacion de los FNE: {tiempofne.Elapsed.TotalSeconds} segundos";
+            ResultadosFNE.Text = ResultadosFNE.Text + "\r\n\r\n********RESULTADOS DE LA OPTIMIZACION DE LOS FNE********";
             /*IMPRIMIENDO RESULTADOS FINALES*/
         }
 
@@ -785,6 +825,11 @@ namespace Algoritmo_Genetico_Visual1
         }
 
         private void label10_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void chart2_Click(object sender, EventArgs e)
         {
 
         }
