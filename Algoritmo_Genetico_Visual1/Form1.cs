@@ -167,11 +167,11 @@ namespace Algoritmo_Genetico_Visual1
             double FNEMax = FNEList.Max();
             double FNEMin = FNEList.Min();
 
-            if (FNEMax == FNEMin)
-            {
-                FNEMax = FNEMax + 1000;
-                FNEMin = FNEMin - 1000;
-            }
+            double porcentajeFNEMax = FNEMax / 100;
+            double porcentajeFNEMin = FNEMin / 100;
+
+            FNEMax = FNEMax + (porcentajeFNEMax * 10);
+            FNEMin = FNEMin - (porcentajeFNEMin * 10);
 
             List<List<double>> poblacion2 = new List<List<double>>();
 
@@ -202,7 +202,7 @@ namespace Algoritmo_Genetico_Visual1
 
                 List<int> torneo1b = posTorneo(0, poblacion2.Count / 2);
                 List<int> torneo2b = posTorneo(poblacion2.Count / 2, poblacion2.Count);
-                List<List<double>> padre2 = SeleccionFNE(torneo1b, torneo2b, ResultadosFX2, poblacion2);
+                List<List<double>> padre2 = SeleccionFNE(torneo1b, torneo2b, ResultadosFX2, poblacion2, FNEMax);
 
                 List<int> cruce1b = posTorneo(0, padre2.Count / 2);
                 List<int> cruce2b = posTorneo(padre2.Count / 2, padre2.Count);
@@ -637,7 +637,7 @@ namespace Algoritmo_Genetico_Visual1
             return ResultadosFX;
         }
 
-        static List<List<double>> SeleccionFNE(List<int> p1, List<int> p2, List<double> ResultadosFX, List<List<double>> poblacion)
+        static List<List<double>> SeleccionFNE(List<int> p1, List<int> p2, List<double> ResultadosFX, List<List<double>> poblacion, double FNEMax)
         {
             List<List<double>> padre = new List<List<double>>();
             List<double> padrefx = new List<double>();
@@ -655,75 +655,43 @@ namespace Algoritmo_Genetico_Visual1
                 tem.Add(fx2);
 
                 double ganador = 0;
+
                 int indexganadorPob = 0;
 
                 ganador = tem.Max(x => x);
+
                 indexganadorPob = ResultadosFX.FindIndex(x => x == ganador);
-                padrefx.Add(ganador);
-                padre.Add(poblacion[indexganadorPob]);
 
-                /* if (fx1 < inversion && fx2 < inversion)
-                 {
-                     //List<double> reorganizacionNega = tem.Where(x => x < inversion).ToList();
-                     ganador = tem.Max(x => x);
-                     indexganadorPob = ResultadosFX.FindIndex(x => x == ganador);
-                     padrefx.Add(ganador);
-                     padre.Add(poblacion[indexganadorPob]);
-                 }
-                 else if(fx1 >= inversion && fx2 >= inversion)
-                 {
-                     List<double> reorganizacionPos = tem.Where(x => x >= inversion).ToList();
-                     ganador = reorganizacionPos.Min(x => x);
-                     indexganadorPob = ResultadosFX.FindIndex(x => x == ganador);
-                     padrefx.Add(ganador);
-                     padre.Add(poblacion[indexganadorPob]);
-                 }
-                 /*  else
-                 {
-                     double fx1p, fx2p;
-                     fx1p = Math.Abs(fx1);
-                     fx2p = Math.Abs(fx2);
+                List<double> pobganador = poblacion[indexganadorPob];
 
-                    tem.Clear();
+                Boolean t1 = false;
+                for (int j = 0; j < pobganador.Count; j++)
+                {
+                    if (pobganador[j] <= (FNEMax + 100))
+                    {
+                        t1 = true;
+                    }
+                    else
+                    {
+                        t1 = false;
+                        break;
+                    }
 
-                     tem.Add(fx1p);
-                     tem.Add(fx2p);
-
-                     if (fx1 < -0)
-                     {
-                         List<double> reorganizacionPos = tem.Where(x => x >= 0).ToList();
-                         ganador = reorganizacionPos.Min(x => x);
-                         if (fx1p == ganador)
-                         {
-                             indexganadorPob = ResultadosFX.FindIndex(x => x == fx1);
-                             padrefx.Add(fx1);
-                             padre.Add(poblacion[indexganadorPob]);
-                         }
-                         else
-                         {
-                             indexganadorPob = ResultadosFX.FindIndex(x => x == fx2p);
-                             padrefx.Add(fx2);
-                             padre.Add(poblacion[indexganadorPob]);
-                         }
-                     }
-                     else
-                     {
-                         List<double> reorganizacionPos = tem.Where(x => x > 0).ToList();
-                         ganador = reorganizacionPos.Min(x => x);
-                         if (fx2p == ganador)
-                         {
-                             indexganadorPob = ResultadosFX.FindIndex(x => x == fx2);
-                             padrefx.Add(fx2);
-                             padre.Add(poblacion[indexganadorPob]);
-                         }
-                         else
-                         {
-                             indexganadorPob = ResultadosFX.FindIndex(x => x == fx1p);
-                             padrefx.Add(fx1);
-                             padre.Add(poblacion[indexganadorPob]);
-                         }
-                     }
-                 }*/
+                }
+                if (t1)
+                {
+                    padrefx.Add(ganador);
+                    padre.Add(poblacion[indexganadorPob]);
+                }
+                else
+                {
+                    double perdedor = 0;
+                    int indexperdedorPob = 0;
+                    perdedor = tem.Min(x => x);
+                    indexperdedorPob = ResultadosFX.FindIndex(x => x == perdedor);
+                    padrefx.Add(perdedor);
+                    padre.Add(poblacion[indexperdedorPob]);
+                }
             }
             return padre;
         }
