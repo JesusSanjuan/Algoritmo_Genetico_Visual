@@ -331,7 +331,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(1924, 1006);
+            this.ClientSize = new System.Drawing.Size(2028, 1013);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.ResultadosFNE);
             this.Controls.Add(this.label9);

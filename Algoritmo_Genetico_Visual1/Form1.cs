@@ -525,6 +525,7 @@ namespace Algoritmo_Genetico_Visual1
             Random random = new Random();
             List<double> poblacionnueva1a = Cruce(cruce1, cruce2, padre);
             List<double> poblacionnueva1 = mutacion(poblacionnueva1a, iteracion, random);
+            double p = Math.Pow(2 + (((15 - 2) / (80 - 1)) * iteracion), -1);
             cruce1 = DesordenarLista(cruce1);
             cruce2 = DesordenarLista(cruce2);
             List<double> poblacionnueva2a = Cruce(cruce1, cruce2, padre);
@@ -551,11 +552,12 @@ namespace Algoritmo_Genetico_Visual1
         static List<double> mutacion(List<double> poblacion1, int iteracion, Random random)
         {
             ////List<double> mutacionResultado = new List<double>();
+            double p=0;
             for (int i = 0; i < poblacion1.Count; i++)
             {
                 // double numeroAleatorio = random.NextDouble();
                 double longitud = Convert.ToString(poblacion1[i]).Length - 1;
-                double p = Math.Pow(2 + (((longitud - 2) / (70 - 1)) * iteracion), -1);
+                p = Math.Pow(2 + (((longitud - 2) / (80 - 1)) * iteracion), -1);
                 // Console.WriteLine("\n\t\t\t\t\tMUTACION {0}", numeroAleatorio);
                 if (p > .1)//AQUI PERMITE LA MUTACION lgo invertido
                 {
