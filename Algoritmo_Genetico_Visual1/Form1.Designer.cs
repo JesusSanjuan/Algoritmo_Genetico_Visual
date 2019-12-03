@@ -39,11 +39,12 @@
             System.Windows.Forms.DataVisualization.Charting.Title title2 = new System.Windows.Forms.DataVisualization.Charting.Title();
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Title title3 = new System.Windows.Forms.DataVisualization.Charting.Title();
+            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Title title4 = new System.Windows.Forms.DataVisualization.Charting.Title();
+            System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series7 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.Calcular = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
@@ -58,14 +59,12 @@
             this.Resultados = new System.Windows.Forms.TextBox();
             this.Resultadosdd = new System.Windows.Forms.Label();
             this.chart2 = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.chart3 = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.chart4 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.label6 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
             this.ResultadosFNE = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
+            this.chart3 = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.chart4 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chart2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chart3)).BeginInit();
@@ -231,45 +230,6 @@
             this.chart2.Titles.Add(title2);
             this.chart2.Click += new System.EventHandler(this.chart2_Click);
             // 
-            // chart3
-            // 
-            chartArea3.Name = "ChartArea1";
-            this.chart3.ChartAreas.Add(chartArea3);
-            legend3.Name = "Legend1";
-            this.chart3.Legends.Add(legend3);
-            this.chart3.Location = new System.Drawing.Point(1016, 28);
-            this.chart3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.chart3.Name = "chart3";
-            this.chart3.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Pastel;
-            this.chart3.Size = new System.Drawing.Size(992, 351);
-            this.chart3.TabIndex = 14;
-            this.chart3.Text = "chart3";
-            title3.Name = "Title1";
-            title3.Text = "Espacio de busqueda para la optimizacion de los FNE";
-            this.chart3.Titles.Add(title3);
-            // 
-            // chart4
-            // 
-            chartArea4.Name = "ChartArea1";
-            this.chart4.ChartAreas.Add(chartArea4);
-            legend4.Name = "Legend1";
-            this.chart4.Legends.Add(legend4);
-            this.chart4.Location = new System.Drawing.Point(1013, 414);
-            this.chart4.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.chart4.Name = "chart4";
-            this.chart4.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Bright;
-            series4.ChartArea = "ChartArea1";
-            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series4.Legend = "Legend1";
-            series4.Name = "Convergencia";
-            this.chart4.Series.Add(series4);
-            this.chart4.Size = new System.Drawing.Size(995, 368);
-            this.chart4.TabIndex = 15;
-            this.chart4.Text = "chart4";
-            title4.Name = "Title1";
-            title4.Text = "Convergencia de la optimizacion de los FNE";
-            this.chart4.Titles.Add(title4);
-            // 
             // label6
             // 
             this.label6.AutoSize = true;
@@ -278,15 +238,6 @@
             this.label6.Size = new System.Drawing.Size(188, 17);
             this.label6.TabIndex = 16;
             this.label6.Text = "Resultados de convergencia";
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(1011, 394);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(188, 17);
-            this.label7.TabIndex = 17;
-            this.label7.Text = "Resultados de convergencia";
             // 
             // label8
             // 
@@ -297,15 +248,6 @@
             this.label8.TabIndex = 18;
             this.label8.Text = "Espacio de busqueda";
             this.label8.Click += new System.EventHandler(this.label8_Click);
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(1013, 9);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(145, 17);
-            this.label9.TabIndex = 19;
-            this.label9.Text = "Espacio de busqueda";
             // 
             // ResultadosFNE
             // 
@@ -326,20 +268,62 @@
             this.label10.Text = "Resultados de la optimizacion de los FNE";
             this.label10.Click += new System.EventHandler(this.label10_Click);
             // 
+            // chart3
+            // 
+            chartArea3.Name = "ChartArea1";
+            this.chart3.ChartAreas.Add(chartArea3);
+            legend3.Name = "Legend1";
+            this.chart3.Legends.Add(legend3);
+            this.chart3.Location = new System.Drawing.Point(1098, 28);
+            this.chart3.Name = "chart3";
+            series4.ChartArea = "ChartArea1";
+            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series4.Legend = "Legend1";
+            series4.Name = "ProbMutacion";
+            series5.ChartArea = "ChartArea1";
+            series5.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series5.Legend = "Legend1";
+            series5.Name = "Mutacion";
+            this.chart3.Series.Add(series4);
+            this.chart3.Series.Add(series5);
+            this.chart3.Size = new System.Drawing.Size(882, 376);
+            this.chart3.TabIndex = 22;
+            this.chart3.Text = "chart3";
+            // 
+            // chart4
+            // 
+            chartArea4.Name = "ChartArea1";
+            this.chart4.ChartAreas.Add(chartArea4);
+            legend4.Name = "Legend1";
+            this.chart4.Legends.Add(legend4);
+            this.chart4.Location = new System.Drawing.Point(1098, 439);
+            this.chart4.Name = "chart4";
+            series6.ChartArea = "ChartArea1";
+            series6.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series6.Legend = "Legend1";
+            series6.Name = "ProbCruce";
+            series7.ChartArea = "ChartArea1";
+            series7.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series7.Legend = "Legend1";
+            series7.Name = "Cruce";
+            this.chart4.Series.Add(series6);
+            this.chart4.Series.Add(series7);
+            this.chart4.Size = new System.Drawing.Size(882, 376);
+            this.chart4.TabIndex = 23;
+            this.chart4.Text = "chart4";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(2028, 1013);
-            this.Controls.Add(this.label10);
-            this.Controls.Add(this.ResultadosFNE);
-            this.Controls.Add(this.label9);
-            this.Controls.Add(this.label8);
-            this.Controls.Add(this.label7);
-            this.Controls.Add(this.label6);
             this.Controls.Add(this.chart4);
             this.Controls.Add(this.chart3);
+            this.Controls.Add(this.label10);
+            this.Controls.Add(this.ResultadosFNE);
+            this.Controls.Add(this.label8);
+            this.Controls.Add(this.label6);
             this.Controls.Add(this.chart2);
             this.Controls.Add(this.Resultadosdd);
             this.Controls.Add(this.Resultados);
@@ -382,14 +366,12 @@
         private System.Windows.Forms.TextBox Resultados;
         private System.Windows.Forms.Label Resultadosdd;
         private System.Windows.Forms.DataVisualization.Charting.Chart chart2;
-        private System.Windows.Forms.DataVisualization.Charting.Chart chart3;
-        private System.Windows.Forms.DataVisualization.Charting.Chart chart4;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Label label9;
         private System.Windows.Forms.TextBox ResultadosFNE;
         private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.DataVisualization.Charting.Chart chart3;
+        private System.Windows.Forms.DataVisualization.Charting.Chart chart4;
     }
 }
 

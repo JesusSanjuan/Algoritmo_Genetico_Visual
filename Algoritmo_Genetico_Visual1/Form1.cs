@@ -81,6 +81,8 @@ namespace Algoritmo_Genetico_Visual1
             double porcentaje = (((double)100) / Int32.Parse(poblacionNumero));
             List<double> ResultadosFX;
             Random random2 = new Random();
+            List<double> p2 = new List<double>();
+
             do
             {
                 ResultadosFX = fx(inversion, FNE, VS, poblacion, periodo);
@@ -95,15 +97,20 @@ namespace Algoritmo_Genetico_Visual1
                 List<double> hijos_Generados = new List<double>();
 
                 double probCruz = random2.NextDouble();
-
                 if (probCruz < 0.9)
                 {
+
                     hijos_Generados = CruceTotal(padre, cruce1, cruce2, i);
                 }
                 else
                 {
                     hijos_Generados = padre;
                 }
+                
+                chart4.Series["ProbCruce"].Points.AddXY(i, probCruz);
+                chart4.Series["Cruce"].Points.AddXY(i, 0.9);
+                chart3.ChartAreas[0].AxisX.Title = "Generaciones";
+                chart3.ChartAreas[0].AxisY.Title = "Probabilidad de cruce";
 
                 poblacion.Clear();
                 poblacion = padre.Concat(hijos_Generados).ToList();
@@ -248,76 +255,7 @@ namespace Algoritmo_Genetico_Visual1
             
           
 
-            chart4.Series["Convergencia"].Points.Clear();
-            chart4.ChartAreas[0].AxisX.Title = "Generaciones";
-            chart4.ChartAreas[0].AxisY.Title = "Porcentaje de Convergencia";
-            for (int a = 0; a < porcentajeconvergenciagrafica2.Count; a++)
-            {
-                chart4.Series["Convergencia"].Points.AddXY(a, porcentajeconvergenciagrafica2[a]);
-            }
-
             
-
-            chart3.ChartAreas[0].AxisX.Title = "Numero Cromosoma";
-            chart3.ChartAreas[0].AxisY.Title = "Valor de Cromosoma";
-            for (int c = 0; c < periodo; c++)
-            {
-                try
-                {
-                    chart3.Series.Add("Cromosoma " + c);
-                    chart3.Series["Cromosoma " + c].ChartType = SeriesChartType.Point;
-                }
-                catch (System.ArgumentException ae)
-                {
-
-                }
-            }
-
-            for (int c = 0; c < periodo; c++)
-            {
-                chart3.Series["Cromosoma " + c].Points.Clear();
-            }
-
-            for (int a = 0; a < Int32.Parse(poblacionNumero); a++)
-            {
-                 List<double> temporal = new List<double>();
-                temporal=poblacionGrafica2[a];
-                for (int b = 0; b < temporal.Count; b++)
-                {
-                    chart3.Series["Cromosoma " + b].Points.AddXY(a, temporal[b]);
-
-                }                
-            }
-
-
-            for (int c = 0; c < periodo; c++)
-            {
-                try
-                {
-                    chart3.Series.Add("Cromosoma Optimo " + c);
-                    chart3.Series["Cromosoma Optimo " + c].ChartType = SeriesChartType.Point;
-                }
-                catch (System.ArgumentException ae)
-                {
-
-                }
-            }
-
-            for (int c = 0; c < periodo; c++)
-            {
-                chart3.Series["Cromosoma Optimo " + c].Points.Clear();
-            }
-
-            for (int a = 0; a < Int32.Parse(poblacionNumero); a++)
-            {
-                List<double> temporal2 = new List<double>();
-                temporal2 = poblacion2[a];
-                for (int b = 0; b < temporal2.Count; b++)
-                {
-                    chart3.Series["Cromosoma Optimo " + b].Points.AddXY(a, temporal2[b]);
-
-                }
-            }
 
             /*IMPRIMIENDO RESULTADOS FINALES*/
             Resultados.Text = Resultados.Text + "********RESULTADOS DE LA BUSQUEDA DE LA TIR*************";
@@ -520,17 +458,17 @@ namespace Algoritmo_Genetico_Visual1
             return padre;
         }
 
-        static List<double> CruceTotal(List<double> padre, List<int> cruce1, List<int> cruce2, int iteracion)
+        public List<double> CruceTotal(List<double> padre, List<int> cruce1, List<int> cruce2, int iteracion)
         {
-            Random random = new Random();
-            List<double> poblacionnueva1a = Cruce(cruce1, cruce2, padre);
-            List<double> poblacionnueva1 = mutacion(poblacionnueva1a, iteracion, random);
-            double p = Math.Pow(2 + (((15 - 2) / (80 - 1)) * iteracion), -1);
+            List<double> poblacionnueva1a = Cruce(cruce1, cruce2, padre);  
             cruce1 = DesordenarLista(cruce1);
             cruce2 = DesordenarLista(cruce2);
             List<double> poblacionnueva2a = Cruce(cruce1, cruce2, padre);
-            List<double> poblacionnueva2 = mutacion(poblacionnueva2a, iteracion, random);
-            return poblacionnueva1.Concat(poblacionnueva2).ToList();
+            List<double> poblacionnuevatem = poblacionnueva1a.Concat(poblacionnueva2a).ToList();
+
+            List<double> poblacionnueva = mutacion(poblacionnuevatem, iteracion);
+
+            return poblacionnueva;
         }
 
         static List<double> Cruce(List<int> cruce1, List<int> cruce2, List<double> padre)
@@ -549,15 +487,17 @@ namespace Algoritmo_Genetico_Visual1
             return hijos;
         }
 
-        static List<double> mutacion(List<double> poblacion1, int iteracion, Random random)
+        public List<double> mutacion(List<double> poblacion1, int iteracion)
         {
             ////List<double> mutacionResultado = new List<double>();
-            double p=0;
+            double sumatoria = 0;
+            double promediomutacion = 0;
             for (int i = 0; i < poblacion1.Count; i++)
             {
                 // double numeroAleatorio = random.NextDouble();
                 double longitud = Convert.ToString(poblacion1[i]).Length - 1;
-                p = Math.Pow(2 + (((longitud - 2) / (80 - 1)) * iteracion), -1);
+                double p = Math.Pow(2 + (((longitud - 2) / (80 - 1)) * iteracion), -1);
+                sumatoria = sumatoria + p;
                 // Console.WriteLine("\n\t\t\t\t\tMUTACION {0}", numeroAleatorio);
                 if (p > .1)//AQUI PERMITE LA MUTACION lgo invertido
                 {
@@ -572,6 +512,11 @@ namespace Algoritmo_Genetico_Visual1
                     poblacion1[i] = poblacion1[i];
                 }
             }
+            promediomutacion = sumatoria / poblacion1.Count;
+            chart3.Series["ProbMutacion"].Points.AddXY(iteracion, promediomutacion);
+            chart3.Series["Mutacion"].Points.AddXY(iteracion, 0.1);
+            chart3.ChartAreas[0].AxisX.Title = "Generaciones";
+            chart3.ChartAreas[0].AxisY.Title = "Probabilidad de mutacion";
             return poblacion1;
         }
 
