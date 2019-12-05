@@ -277,7 +277,7 @@
             this.chart3.Location = new System.Drawing.Point(1098, 28);
             this.chart3.Name = "chart3";
             series4.ChartArea = "ChartArea1";
-            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
             series4.Legend = "Legend1";
             series4.Name = "ProbMutacion";
             series5.ChartArea = "ChartArea1";

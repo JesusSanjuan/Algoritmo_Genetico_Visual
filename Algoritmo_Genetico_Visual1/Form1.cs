@@ -33,15 +33,17 @@ namespace Algoritmo_Genetico_Visual1
             double[] FNE = new double[Convert.ToInt32(per)];
 
 
-            FNE[0] = Convert.ToDouble(1000);
-            FNE[1] = Convert.ToDouble(3000);
-            FNE[2] = Convert.ToDouble(5000);
-           /* for (int x = 0; x < Convert.ToInt32(per); x++)
-            {
-                Console.WriteLine("\tIntroduzca el FNE {0}: ", x + 1);
-                String temporal = Console.ReadLine();
-                FNE[x] = Convert.ToDouble(temporal);
-            }*/
+            FNE[0] = Convert.ToDouble(2000);
+            FNE[1] = Convert.ToDouble(1000);
+            FNE[2] = Convert.ToDouble(3000);
+            FNE[3] = Convert.ToDouble(3000);
+            FNE[4] = Convert.ToDouble(1000);
+            /* for (int x = 0; x < Convert.ToInt32(per); x++)
+             {
+                 Console.WriteLine("\tIntroduzca el FNE {0}: ", x + 1);
+                 String temporal = Console.ReadLine();
+                 FNE[x] = Convert.ToDouble(temporal);
+             }*/
 
             inversion = Convert.ToDouble(inve);
             periodo = Convert.ToInt32(per);
@@ -109,8 +111,8 @@ namespace Algoritmo_Genetico_Visual1
                 
                 chart4.Series["ProbCruce"].Points.AddXY(i, probCruz);
                 chart4.Series["Cruce"].Points.AddXY(i, 0.9);
-                chart3.ChartAreas[0].AxisX.Title = "Generaciones";
-                chart3.ChartAreas[0].AxisY.Title = "Probabilidad de cruce";
+                chart4.ChartAreas[0].AxisX.Title = "Generaciones";
+                chart4.ChartAreas[0].AxisY.Title = "Probabilidad de cruce";
 
                 poblacion.Clear();
                 poblacion = padre.Concat(hijos_Generados).ToList();
@@ -135,7 +137,7 @@ namespace Algoritmo_Genetico_Visual1
                // Console.WriteLine("\tGeneracion: {0} , Convergencia del: {1}\n", i, porcentajeconvergencia);                
                 porcentajeconvergenciagrafica.Add(porcentajeconvergencia);
                 i = i + 1;
-            } while (porcentajeconvergencia < (double)99.9);
+            } while (porcentajeconvergencia < (double)99.0);
             tiempo.Stop();
             
             chart1.Series["Convergencia"].Points.Clear();
@@ -496,7 +498,7 @@ namespace Algoritmo_Genetico_Visual1
             {
                 // double numeroAleatorio = random.NextDouble();
                 double longitud = Convert.ToString(poblacion1[i]).Length - 1;
-                double p = Math.Pow(2 + (((longitud - 2) / (80 - 1)) * iteracion), -1);
+                double p = Math.Pow(2 + (((longitud - 2) / (90 - 1)) * iteracion), -1);
                 sumatoria = sumatoria + p;
                 // Console.WriteLine("\n\t\t\t\t\tMUTACION {0}", numeroAleatorio);
                 if (p > .1)//AQUI PERMITE LA MUTACION lgo invertido
@@ -687,7 +689,7 @@ namespace Algoritmo_Genetico_Visual1
                 for (int j = 0; j < poblaciontrabajo.Count; j++)
                 {
                     double longitud = Convert.ToString(poblaciontrabajo[j]).Length - 1;
-                    double p = Math.Pow(2 + (((longitud - 2) / (70 - 1)) * iteracion), -1);
+                    double p = Math.Pow(2 + (((longitud - 2) / (90 - 1)) * iteracion), -1);
                     // double numeroAleatorio = random.NextDouble();
 
                     // Console.WriteLine("\n\t\t\t\t\tMUTACION {0}", numeroAleatorio);
