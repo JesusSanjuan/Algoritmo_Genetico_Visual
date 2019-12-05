@@ -41,10 +41,12 @@
             System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Title title3 = new System.Windows.Forms.DataVisualization.Charting.Title();
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.Windows.Forms.DataVisualization.Charting.Series series7 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Title title4 = new System.Windows.Forms.DataVisualization.Charting.Title();
             this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.Calcular = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
@@ -289,6 +291,9 @@
             this.chart3.Size = new System.Drawing.Size(882, 376);
             this.chart3.TabIndex = 22;
             this.chart3.Text = "chart3";
+            title3.Name = "Title1";
+            title3.Text = "Tasa de Mutacion Variable";
+            this.chart3.Titles.Add(title3);
             // 
             // chart4
             // 
@@ -311,6 +316,9 @@
             this.chart4.Size = new System.Drawing.Size(882, 376);
             this.chart4.TabIndex = 23;
             this.chart4.Text = "chart4";
+            title4.Name = "Tasa de cruce";
+            title4.Text = "Tasa de Cruce";
+            this.chart4.Titles.Add(title4);
             // 
             // Form1
             // 
