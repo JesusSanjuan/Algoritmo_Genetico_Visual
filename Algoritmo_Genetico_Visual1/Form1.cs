@@ -33,15 +33,17 @@ namespace Algoritmo_Genetico_Visual1
             double[] FNE = new double[Convert.ToInt32(per)];
 
 
-            FNE[0] = Convert.ToDouble(1000);
-            FNE[1] = Convert.ToDouble(3000);
-            FNE[2] = Convert.ToDouble(5000);
-           /* for (int x = 0; x < Convert.ToInt32(per); x++)
-            {
-                Console.WriteLine("\tIntroduzca el FNE {0}: ", x + 1);
-                String temporal = Console.ReadLine();
-                FNE[x] = Convert.ToDouble(temporal);
-            }*/
+            FNE[0] = Convert.ToDouble(2000);
+            FNE[1] = Convert.ToDouble(1000);
+            FNE[2] = Convert.ToDouble(3000);
+            FNE[3] = Convert.ToDouble(3000);
+            FNE[4] = Convert.ToDouble(1000);
+            /* for (int x = 0; x < Convert.ToInt32(per); x++)
+             {
+                 Console.WriteLine("\tIntroduzca el FNE {0}: ", x + 1);
+                 String temporal = Console.ReadLine();
+                 FNE[x] = Convert.ToDouble(temporal);
+             }*/
 
             inversion = Convert.ToDouble(inve);
             periodo = Convert.ToInt32(per);
@@ -146,7 +148,7 @@ namespace Algoritmo_Genetico_Visual1
             for (int a = 0; a < Int32.Parse(poblacionNumero); a++)
             {
                 chart2.Series["Poblacion Inicial"].Points.AddXY(a, poblacionGrafica[a]);
-                chart2.Series["Poblacion Final"].Points.AddXY(a, poblacion[a]);
+                //chart2.Series["Poblacion Final"].Points.AddXY(a, poblacion[a]);
             }
 
             Resultados.Text = Resultados.Text + "\r\n******************CONCLUIDA LA BUSQUEDA DE LA TIR.*****************";
@@ -290,7 +292,7 @@ namespace Algoritmo_Genetico_Visual1
             }
 
 
-            for (int c = 0; c < periodo; c++)
+       /*     for (int c = 0; c < periodo; c++)
             {
                 try
                 {
@@ -317,7 +319,7 @@ namespace Algoritmo_Genetico_Visual1
                     chart3.Series["Cromosoma Optimo " + b].Points.AddXY(a, temporal2[b]);
 
                 }
-            }
+            }*/
 
             /*IMPRIMIENDO RESULTADOS FINALES*/
             Resultados.Text = Resultados.Text + "********RESULTADOS DE LA BUSQUEDA DE LA TIR*************";
