@@ -103,6 +103,7 @@ namespace Algoritmo_Genetico_Visual1
                 {
 
                     hijos_Generados = CruceTotal(padre, cruce1, cruce2, i);
+                    
                 }
                 else
                 {
@@ -139,24 +140,43 @@ namespace Algoritmo_Genetico_Visual1
                 i = i + 1;
             } while (porcentajeconvergencia < (double)99.0);
             tiempo.Stop();
-            
+
+            /*Limitantes*/
+            chart3.ChartAreas[0].AxisX.Maximum = porcentajeconvergenciagrafica.Count;
+            int someInt2 = (int)porcentajeconvergenciagrafica.Count / 10;
+            chart3.ChartAreas[0].AxisX.Interval = someInt2;
+
+            chart4.ChartAreas[0].AxisX.Maximum = porcentajeconvergenciagrafica.Count;
+            int someInt3 = (int)porcentajeconvergenciagrafica.Count / 10;
+            chart4.ChartAreas[0].AxisX.Interval = someInt3;
+            /*Limitantes*/
+
             chart1.Series["Convergencia"].Points.Clear();
             chart1.ChartAreas[0].AxisX.Title = "Generaciones";
-            chart1.ChartAreas[0].AxisY.Title = "Porcentaje de Convergencia";            
-            for (int a=0; a<porcentajeconvergenciagrafica.Count;a++)
+            chart1.ChartAreas[0].AxisY.Title = "Porcentaje de Convergencia";  
+            
+            for (int a=1; a<porcentajeconvergenciagrafica.Count;a++)
             {
                 chart1.Series["Convergencia"].Points.AddXY(a, porcentajeconvergenciagrafica[a]);
             }
+            chart1.ChartAreas[0].AxisY.Maximum = 100;            
+            int someInt = (int)porcentajeconvergenciagrafica.Count / 10;
+            Console.WriteLine("Valor:  {0}", porcentajeconvergenciagrafica.Count);
+            chart1.ChartAreas[0].AxisX.Interval = someInt;
+            chart1.ChartAreas[0].AxisX.Maximum = porcentajeconvergenciagrafica.Count;
 
             chart2.Series["Poblacion Inicial"].Points.Clear();
             chart2.Series["Poblacion Final"].Points.Clear();
             chart2.ChartAreas[0].AxisX.Title = "Numero Cromosoma";
             chart2.ChartAreas[0].AxisY.Title = "Valor de Cromosoma";
-            for (int a = 0; a < Int32.Parse(poblacionNumero); a++)
+            for (int a = 1; a < Int32.Parse(poblacionNumero); a++)
             {
                 chart2.Series["Poblacion Inicial"].Points.AddXY(a, poblacionGrafica[a]);
                 chart2.Series["Poblacion Final"].Points.AddXY(a, poblacion[a]);
-            }
+            }            
+
+            chart2.ChartAreas[0].AxisX.Interval = Int32.Parse(poblacionNumero)/10;
+            chart2.ChartAreas[0].AxisY.Maximum = maximo;
 
             Resultados.Text = Resultados.Text + "\r\n******************CONCLUIDA LA BUSQUEDA DE LA TIR.*****************";
             var resultTIR = poblacion.GroupBy(x => x).Select(g => new { Text = g.Key, Count = g.Count() }).ToList();
@@ -281,39 +301,7 @@ namespace Algoritmo_Genetico_Visual1
             ResultadosFNE.Text = ResultadosFNE.Text + $"\r\n\r\n\t\t\tTiempo para la optimizacion de los FNE: {tiempofne.Elapsed.TotalSeconds} segundos";
             ResultadosFNE.Text = ResultadosFNE.Text + "\r\n\r\n********RESULTADOS DE LA OPTIMIZACION DE LOS FNE********";
             /*IMPRIMIENDO RESULTADOS FINALES*/
-        }
-
-        /*MIENTRAS ARRIBA*/
-        public static List<double> medir_convergencia2(List<List<double>> poblacion)
-        {
-            int[] valida_pos = new int[poblacion.Count];
-            List<double> resultadosFinales = new List<double>();
-
-            for (int i = 0; i < poblacion.Count; i++)
-            {
-                if (valida_pos[i] == 0)
-                {
-                    valida_pos[i] = 1;
-                    int contador = 1;
-                    List<double> v1 = poblacion[i];
-                    for (int j = 0; j < poblacion.Count; j++)
-                    {
-                        if (valida_pos[j] == 0)
-                        {
-                            List<double> v2 = poblacion[j];
-                            if (v1.SequenceEqual(v2))
-                            {
-                                contador++;
-                                valida_pos[j] = 1;
-                            }
-                        }
-                    }
-                    resultadosFinales.Add(contador);
-                }
-            }
-            return resultadosFinales;
-        }
-        /*MIENTRAS ARRIBA*/
+        }        
 
         public static double aproximacioninicial(double Inversion, double[] FNE, int Periodo)
         {
@@ -518,7 +506,8 @@ namespace Algoritmo_Genetico_Visual1
             chart3.Series["ProbMutacion"].Points.AddXY(iteracion, promediomutacion);
             chart3.Series["Mutacion"].Points.AddXY(iteracion, 0.1);
             chart3.ChartAreas[0].AxisX.Title = "Generaciones";
-            chart3.ChartAreas[0].AxisY.Title = "Probabilidad de mutacion";
+            chart3.ChartAreas[0].AxisY.Title = "Probabilidad de mutacion";            
+
             return poblacion1;
         }
 
@@ -709,6 +698,35 @@ namespace Algoritmo_Genetico_Visual1
                 mutacionResultado.Add(poblaciontrabajo);
             }
             return mutacionResultado;
+        }
+        public static List<double> medir_convergencia2(List<List<double>> poblacion)
+        {
+            int[] valida_pos = new int[poblacion.Count];
+            List<double> resultadosFinales = new List<double>();
+
+            for (int i = 0; i < poblacion.Count; i++)
+            {
+                if (valida_pos[i] == 0)
+                {
+                    valida_pos[i] = 1;
+                    int contador = 1;
+                    List<double> v1 = poblacion[i];
+                    for (int j = 0; j < poblacion.Count; j++)
+                    {
+                        if (valida_pos[j] == 0)
+                        {
+                            List<double> v2 = poblacion[j];
+                            if (v1.SequenceEqual(v2))
+                            {
+                                contador++;
+                                valida_pos[j] = 1;
+                            }
+                        }
+                    }
+                    resultadosFinales.Add(contador);
+                }
+            }
+            return resultadosFinales;
         }
 
         private void label1_Click(object sender, EventArgs e)
