@@ -78,11 +78,12 @@
             this.chart1.ChartAreas.Add(chartArea1);
             legend1.Name = "Legend1";
             this.chart1.Legends.Add(legend1);
-            this.chart1.Location = new System.Drawing.Point(12, 414);
+            this.chart1.Location = new System.Drawing.Point(15, 413);
             this.chart1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.chart1.Name = "chart1";
+            series1.BorderWidth = 2;
             series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.StepLine;
             series1.LabelBorderWidth = 2;
             series1.Legend = "Legend1";
             series1.Name = "Convergencia";
@@ -258,8 +259,9 @@
             this.chart4.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.chart4.Name = "chart4";
             this.chart4.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Bright;
+            series4.BorderWidth = 2;
             series4.ChartArea = "ChartArea1";
-            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.StepLine;
             series4.Legend = "Legend1";
             series4.Name = "Convergencia";
             this.chart4.Series.Add(series4);
@@ -331,7 +333,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(2028, 1013);
+            this.ClientSize = new System.Drawing.Size(1924, 1013);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.ResultadosFNE);
             this.Controls.Add(this.label9);
