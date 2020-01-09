@@ -137,11 +137,14 @@ namespace Algoritmo_Genetico_Visual1
                 Resultados.Text = Resultados.Text + "\tGeneracion: " +i+" , Convergencia del: "+ porcentajeconvergencia + "\r\n";
                // Console.WriteLine("\tGeneracion: {0} , Convergencia del: {1}\n", i, porcentajeconvergencia);                
                 porcentajeconvergenciagrafica.Add(porcentajeconvergencia);
-                i = i + 1;
+                if (porcentajeconvergencia < (double)99.9)
+                {
+                    i = i + 1;
+                }
             } while (porcentajeconvergencia < (double)99.0);
             tiempo.Stop();
 
-            /*Limitantes*/
+            /*Limites de ejes de grafica*/
             chart3.ChartAreas[0].AxisX.Maximum = porcentajeconvergenciagrafica.Count;
             int someInt2 = (int)porcentajeconvergenciagrafica.Count / 10;
             chart3.ChartAreas[0].AxisX.Interval = someInt2;
@@ -149,21 +152,32 @@ namespace Algoritmo_Genetico_Visual1
             chart4.ChartAreas[0].AxisX.Maximum = porcentajeconvergenciagrafica.Count;
             int someInt3 = (int)porcentajeconvergenciagrafica.Count / 10;
             chart4.ChartAreas[0].AxisX.Interval = someInt3;
-            /*Limitantes*/
+            chart4.ChartAreas[0].AxisY.Interval =(double) 0.1;
+            /*Limites de ejes de grafica*/
 
             chart1.Series["Convergencia"].Points.Clear();
             chart1.ChartAreas[0].AxisX.Title = "Generaciones";
             chart1.ChartAreas[0].AxisY.Title = "Porcentaje de Convergencia";  
             
-            for (int a=1; a<porcentajeconvergenciagrafica.Count;a++)
+            for (int a=1; a<porcentajeconvergenciagrafica.Count+1;a++)
             {
-                chart1.Series["Convergencia"].Points.AddXY(a, porcentajeconvergenciagrafica[a]);
+                chart1.Series["Convergencia"].Points.AddXY(a, porcentajeconvergenciagrafica[a-1]);
             }
-            chart1.ChartAreas[0].AxisY.Maximum = 100;            
-            int someInt = (int)porcentajeconvergenciagrafica.Count / 10;
-            Console.WriteLine("Valor:  {0}", porcentajeconvergenciagrafica.Count);
-            chart1.ChartAreas[0].AxisX.Interval = someInt;
-            chart1.ChartAreas[0].AxisX.Maximum = porcentajeconvergenciagrafica.Count;
+
+            /*Limites de ejes de grafica*/
+                chart1.ChartAreas[0].AxisY.Maximum = 100;
+                double valorConDecimal = (double)porcentajeconvergenciagrafica.Count / 10;
+                long valorSinDecimal = (long)valorConDecimal;
+                double decimales = valorConDecimal - (double)valorSinDecimal;
+                if (decimales != 0)
+                {
+                    valorSinDecimal = valorSinDecimal + 1;
+                }
+                int someIntT = (int)valorSinDecimal * 10;
+                chart1.ChartAreas[0].AxisX.Maximum = someIntT;
+                chart1.ChartAreas[0].AxisX.Interval = someIntT / 10;
+            /*Limites de ejes de grafica*/
+
 
             chart2.Series["Poblacion Inicial"].Points.Clear();
             chart2.Series["Poblacion Final"].Points.Clear();
@@ -174,10 +188,10 @@ namespace Algoritmo_Genetico_Visual1
                 chart2.Series["Poblacion Inicial"].Points.AddXY(a, poblacionGrafica[a]);
                 chart2.Series["Poblacion Final"].Points.AddXY(a, poblacion[a]);
             }
-            /*Limitantes*/
+            /*Limites de ejes de grafica*/
             chart2.ChartAreas[0].AxisX.Interval = Int32.Parse(poblacionNumero)/10;
             chart2.ChartAreas[0].AxisY.Maximum = maximo;
-            /*Limitantes*/
+            /*Limites de ejes de grafica*/
 
             Resultados.Text = Resultados.Text + "\r\n******************CONCLUIDA LA BUSQUEDA DE LA TIR.*****************";
             var resultTIR = poblacion.GroupBy(x => x).Select(g => new { Text = g.Key, Count = g.Count() }).ToList();
