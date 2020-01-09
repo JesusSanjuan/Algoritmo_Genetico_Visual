@@ -173,10 +173,11 @@ namespace Algoritmo_Genetico_Visual1
             {
                 chart2.Series["Poblacion Inicial"].Points.AddXY(a, poblacionGrafica[a]);
                 chart2.Series["Poblacion Final"].Points.AddXY(a, poblacion[a]);
-            }            
-
+            }
+            /*Limitantes*/
             chart2.ChartAreas[0].AxisX.Interval = Int32.Parse(poblacionNumero)/10;
             chart2.ChartAreas[0].AxisY.Maximum = maximo;
+            /*Limitantes*/
 
             Resultados.Text = Resultados.Text + "\r\n******************CONCLUIDA LA BUSQUEDA DE LA TIR.*****************";
             var resultTIR = poblacion.GroupBy(x => x).Select(g => new { Text = g.Key, Count = g.Count() }).ToList();
