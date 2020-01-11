@@ -131,18 +131,18 @@ namespace Algoritmo_Genetico_Visual1
                     i = i + 1;
                 }                
             } while (porcentajeconvergencia < (double)99.9);
-            tiempo.Stop();            
-
+            tiempo.Stop();
             chart1.Series["Convergencia"].Points.Clear();
             chart1.ChartAreas[0].AxisX.Title = "Generaciones";
-            chart1.ChartAreas[0].AxisY.Title = "Porcentaje de Convergencia";            
-            for (int a=1; a<porcentajeconvergenciagrafica.Count+1;a++)
+            chart1.ChartAreas[0].AxisY.Title = "Porcentaje de Convergencia";
+            int a0;
+            for ( a0=1; a0<=porcentajeconvergenciagrafica.Count;a0++)
             {
-                chart1.Series["Convergencia"].Points.AddXY(a, porcentajeconvergenciagrafica[a-1]);
+                chart1.Series["Convergencia"].Points.AddXY(a0, porcentajeconvergenciagrafica[a0-1]);
             }
 
             /*Limites de ejes de grafica*/
-            chart1.ChartAreas[0].AxisY.Maximum = 100; 
+                chart1.ChartAreas[0].AxisY.Maximum = 100; 
                 double valorConDecimal = (double)porcentajeconvergenciagrafica.Count / 10;
                 long valorSinDecimal = (long)valorConDecimal;
                 double decimales = valorConDecimal - (double)valorSinDecimal;
