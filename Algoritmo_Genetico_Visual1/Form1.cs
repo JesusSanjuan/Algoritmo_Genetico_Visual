@@ -53,8 +53,7 @@ namespace Algoritmo_Genetico_Visual1
             poblacionNumero = poblacionNumeroTex.Text;
 
 
-            Resultados.Text = "\r\nAproximacion inicial encontrada";
-            Resultados.Text = Resultados.Text+ "\r\n\n******************INICIO DE LA BUSQUEDA DE LA TIR.*****************\r\n\n";
+            Resultados.Text = Resultados.Text + "******************INICIO DE LA BUSQUEDA DE LA TIR.*****************\r\n\n";
 
             List<double> porcentajeconvergenciagrafica = new List<double>();            
 
