@@ -48,9 +48,7 @@ namespace Algoritmo_Genetico_Visual1
             String poblacionNumero;
             poblacionNumero = poblacionNumeroTex.Text;
 
-
-            Resultados.Text = "\r\nAproximacion inicial encontrada";
-            Resultados.Text = Resultados.Text+ "\r\n\n******************INICIO DE LA BUSQUEDA DE LA TIR.*****************\r\n\n";
+            Resultados.Text = Resultados.Text+ "******************INICIO DE LA BUSQUEDA DE LA TIR.*****************\r\n\n";
 
             List<double> porcentajeconvergenciagrafica = new List<double>();            
 
@@ -132,6 +130,7 @@ namespace Algoritmo_Genetico_Visual1
                 }                
             } while (porcentajeconvergencia < (double)99.9);
             tiempo.Stop();
+
             chart1.Series["Convergencia"].Points.Clear();
             chart1.ChartAreas[0].AxisX.Title = "Generaciones";
             chart1.ChartAreas[0].AxisY.Title = "Porcentaje de Convergencia";
@@ -142,7 +141,8 @@ namespace Algoritmo_Genetico_Visual1
             }
 
             /*Limites de ejes de grafica*/
-                chart1.ChartAreas[0].AxisY.Maximum = 100; 
+                chart1.ChartAreas[0].AxisY.Maximum = 100;
+                chart1.ChartAreas[0].AxisY.Interval = 10;
                 double valorConDecimal = (double)porcentajeconvergenciagrafica.Count / 10;
                 long valorSinDecimal = (long)valorConDecimal;
                 double decimales = valorConDecimal - (double)valorSinDecimal;
@@ -152,7 +152,7 @@ namespace Algoritmo_Genetico_Visual1
                 }
                 int someIntT = (int)valorSinDecimal * 10;
                 chart1.ChartAreas[0].AxisX.Maximum = someIntT;
-                chart1.ChartAreas[0].AxisX.Interval = someIntT/10;
+                chart1.ChartAreas[0].AxisX.Interval = 5;
 
                 chart2.Series["Poblacion Inicial"].Points.Clear();
                 chart2.Series["Poblacion Final"].Points.Clear();
@@ -164,17 +164,30 @@ namespace Algoritmo_Genetico_Visual1
                     //chart2.Series["Poblacion Final"].Points.AddXY(a, poblacion[a]);
                 }
                 chart2.ChartAreas[0].AxisX.Interval = Int32.Parse(poblacionNumero) / 10;
-                chart2.ChartAreas[0].AxisY.Maximum = maximo+200;
+                chart2.ChartAreas[0].AxisY.Interval = 200;
+
+                double tem0 = maximo / 100;
+                long valorSinDecimal0 = (long)tem0;
+                valorSinDecimal0 = valorSinDecimal0 + 1;
+                int someIntT0 = (int)valorSinDecimal0 * 100;
+                chart2.ChartAreas[0].AxisY.Maximum = someIntT0;
+
+
+                double tem = minimo /100;
+                long valorSinDecimal1 = (long)tem;
+                valorSinDecimal1 = valorSinDecimal1 - 2;
+                int someIntT1 = (int)valorSinDecimal1 * 100;
+                chart2.ChartAreas[0].AxisY.Minimum = someIntT1;
             /*Limites de ejes de grafica*/
 
-            Resultados.Text = Resultados.Text + "\r\n******************CONCLUIDA LA BUSQUEDA DE LA TIR.*****************";
+            Resultados.Text = Resultados.Text + "\r\n******************CONCLUIDA LA BUSQUEDA DE LA TIR******************";
             var resultTIR = poblacion.GroupBy(x => x).Select(g => new { Text = g.Key, Count = g.Count() }).ToList();
             resultTIR = resultTIR.OrderByDescending(o => o.Count).ToList();
 
             var resultTMR = ResultadosFX.GroupBy(x => x).Select(g => new { Text = g.Key, Count = g.Count() }).ToList();
             resultTMR = resultTMR.OrderByDescending(o => o.Count).ToList();
 
-            ResultadosFNE.Text = ResultadosFNE.Text + "\r\n\r\n******************INICIO DE OPTIMIZACION DE FNE.*******************\r\n\r\n";
+            ResultadosFNE.Text = ResultadosFNE.Text + "\r\r******************INICIO DE OPTIMIZACION DE FNE*******************\r\n";
 
             /*Optimizacion de  FLUJOS NETOS DE EFECTIVO*/
 
@@ -265,7 +278,8 @@ namespace Algoritmo_Genetico_Visual1
                 
             } while (porcentajeconvergencia2 < (double)99.9);
             tiempofne.Stop();
-            ResultadosFNE.Text = ResultadosFNE.Text + "\r\n******************FINALIZACION DE OPTIMIZACION DE FNE.*******************\r\n\r\n";
+
+            ResultadosFNE.Text = ResultadosFNE.Text + "******************FINALIZACION DE OPTIMIZACION DE FNE*******************";
             /*Optimiazacion de  FLUJOS NETOS DE EFECTIVO*/                   
 
             chart4.Series["Convergencia"].Points.Clear();
@@ -310,9 +324,11 @@ namespace Algoritmo_Genetico_Visual1
 
             /*Limites de ejes de grafica*/
                 chart3.ChartAreas[0].AxisX.Interval = Int32.Parse(poblacionNumero) / 10;
+                //chart3.ChartAreas[0].AxisY.Interval = 250;
                 //chart3.ChartAreas[0].AxisY.Maximum = FNEMax;
 
                 chart4.ChartAreas[0].AxisY.Maximum = 100;
+                chart4.ChartAreas[0].AxisY.Interval = 10;
                 double valorConDecimal2 = (double)porcentajeconvergenciagrafica2.Count / 10;
                 long valorSinDecimal2 = (long)valorConDecimal2;
                 double decimales2 = valorConDecimal2 - (double)valorSinDecimal2;
@@ -322,7 +338,7 @@ namespace Algoritmo_Genetico_Visual1
                 }
                 int someIntT2 = (int)valorSinDecimal2 * 10;
                 chart4.ChartAreas[0].AxisX.Maximum = someIntT2;
-                chart4.ChartAreas[0].AxisX.Interval = someIntT2 / 10;
+                chart4.ChartAreas[0].AxisX.Interval = 5;
             /*Limites de ejes de grafica*/
 
 
@@ -356,15 +372,15 @@ namespace Algoritmo_Genetico_Visual1
                  }*/
 
             /*IMPRIMIENDO RESULTADOS FINALES*/
-            Resultados.Text = Resultados.Text + "********RESULTADOS DE LA BUSQUEDA DE LA TIR*************";
-            Resultados.Text = Resultados.Text + "\r\n\tAproximacion inicial es:" + aproxInicial + "\r\n";
+            Resultados.Text = Resultados.Text + "\r\n\r\n******************RESULTADOS DE LA BUSQUEDA DE LA TIR*************";
+            Resultados.Text = Resultados.Text + "\r\n\r\n\tAproximacion inicial es:" + aproxInicial + "\r\n";
             Resultados.Text = Resultados.Text + "\tTotal de Generaciones: " + i + " , Convergencia del: " + porcentajeconvergencia;
             Resultados.Text = Resultados.Text + "\r\n\r\n\t\t RESULTADO TMAR: " + resultTMR[0].Text;
             Resultados.Text = Resultados.Text + "\r\n\t\t RESULTADO TIR: " + resultTIR[0].Text;
-            Resultados.Text = Resultados.Text + $"\r\n\r\n\t\t\tTiempo para la busqueda de la TIR y TMAR: {tiempo.Elapsed.TotalSeconds} segundos";
+            Resultados.Text = Resultados.Text + $"\r\n\r\n\t\tTiempo para la busqueda de la TIR y TMAR: {tiempo.Elapsed.TotalSeconds} segundos";
             Resultados.Text = Resultados.Text + "\r\n\r\n********RESULTADOS DE LA BUSQUEDA DE LA TIR*************";
 
-            ResultadosFNE.Text = ResultadosFNE.Text + "\r\n\r\n********RESULTADOS DE LA OPTIMIZACION DE LOS FNE************";
+            ResultadosFNE.Text = ResultadosFNE.Text + "\r\n\r\n******************RESULTADOS DE LA OPTIMIZACION DE LOS FNE******************";
             ResultadosFNE.Text = ResultadosFNE.Text + "\r\n\r\n\tTotal de Generaciones: " + j + " , Convergencia del: " + porcentajeconvergencia2 + "\r\n";
             List<double> poblacionMuestra = new List<double>();
             poblacionMuestra = poblacion2[0];
@@ -844,6 +860,25 @@ namespace Algoritmo_Genetico_Visual1
         {
 
         }
-        
+
+        private void chart3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label9_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void chart4_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
