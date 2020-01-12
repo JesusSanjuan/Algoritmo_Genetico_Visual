@@ -158,9 +158,9 @@ namespace Algoritmo_Genetico_Visual1
                 chart2.Series["Poblacion Final"].Points.Clear();
                 chart2.ChartAreas[0].AxisX.Title = "Numero Cromosoma";
                 chart2.ChartAreas[0].AxisY.Title = "Valor de Cromosoma";
-                for (int a = 1; a < Int32.Parse(poblacionNumero); a++)
+                for (int a = 1; a <= Int32.Parse(poblacionNumero); a++)
                 {
-                    chart2.Series["Poblacion Inicial"].Points.AddXY(a, poblacionGrafica[a]);
+                    chart2.Series["Poblacion Inicial"].Points.AddXY(a, poblacionGrafica[a-1]);
                     //chart2.Series["Poblacion Final"].Points.AddXY(a, poblacion[a]);
                 }
                 chart2.ChartAreas[0].AxisX.Interval = Int32.Parse(poblacionNumero) / 10;
@@ -310,10 +310,10 @@ namespace Algoritmo_Genetico_Visual1
                 chart3.Series["Cromosoma " + c].Points.Clear();
             }
 
-            for (int a = 1; a < Int32.Parse(poblacionNumero); a++)
+            for (int a = 1; a < Int32.Parse(poblacionNumero)+1; a++)
             {
                  List<double> temporal = new List<double>();
-                temporal=poblacionGrafica2[a];
+                temporal=poblacionGrafica2[a-1];
                 for (int b = 0; b < temporal.Count; b++)
                 {
                     chart3.Series["Cromosoma " + b].Points.AddXY(a, temporal[b]);
