@@ -54,7 +54,7 @@ namespace Algoritmo_Genetico_Visual1
 
             Stopwatch tiempo = Stopwatch.StartNew();
 
-            double aproxInicial = aproximacioninicial(inversion, FNE, periodo);
+            double aproxInicial = aproximacioninicial(inversion, FNE);
 
             Random random = new Random();
             double minimo = aproxInicial - 1000;
@@ -321,7 +321,6 @@ namespace Algoritmo_Genetico_Visual1
                 }                
             }
 
-
             /*Limites de ejes de grafica*/
                 chart3.ChartAreas[0].AxisX.Interval = Int32.Parse(poblacionNumero) / 10;
                 //chart3.ChartAreas[0].AxisY.Interval = 250;
@@ -340,7 +339,6 @@ namespace Algoritmo_Genetico_Visual1
                 chart4.ChartAreas[0].AxisX.Maximum = someIntT2;
                 chart4.ChartAreas[0].AxisX.Interval = 5;
             /*Limites de ejes de grafica*/
-
 
             /*     for (int c = 0; c < periodo; c++)
                  {
@@ -395,7 +393,7 @@ namespace Algoritmo_Genetico_Visual1
             /*IMPRIMIENDO RESULTADOS FINALES*/
         }
        
-        public static double aproximacioninicial(double Inversion, double[] FNE, int Periodo)
+        public static double aproximacioninicial(double Inversion, double[] FNE)
         {
             double resultado, sumasuperior = 0, sumainferior = 0;
             for (int i = 0; i < FNE.Length; i++)
@@ -542,14 +540,13 @@ namespace Algoritmo_Genetico_Visual1
 
         static List<double> CruceTotal(List<double> padre, List<int> cruce1, List<int> cruce2, int iteracion)
         {
-            Random random = new Random();
             List<double> poblacionnueva1a = Cruce(cruce1, cruce2, padre);
-            List<double> poblacionnueva1 = mutacion(poblacionnueva1a, iteracion, random);
+            List<double> poblacionnueva1 = mutacion(poblacionnueva1a, iteracion);
             double p = Math.Pow(2 + (((15 - 2) / (80 - 1)) * iteracion), -1);
             cruce1 = DesordenarLista(cruce1);
             cruce2 = DesordenarLista(cruce2);
             List<double> poblacionnueva2a = Cruce(cruce1, cruce2, padre);
-            List<double> poblacionnueva2 = mutacion(poblacionnueva2a, iteracion, random);
+            List<double> poblacionnueva2 = mutacion(poblacionnueva2a, iteracion);
             return poblacionnueva1.Concat(poblacionnueva2).ToList();
         }
 
@@ -568,8 +565,7 @@ namespace Algoritmo_Genetico_Visual1
             }
             return hijos;
         }
-
-        static List<double> mutacion(List<double> poblacion1, int iteracion, Random random)
+        static List<double> mutacion(List<double> poblacion1, int iteracion)
         {
             ////List<double> mutacionResultado = new List<double>();
             double p=0;
@@ -594,7 +590,6 @@ namespace Algoritmo_Genetico_Visual1
             }
             return poblacion1;
         }
-
         static double desviasionstandar(List<double> poblacion1, double mediageometrica)
         {
             double sumatoria = 0;
@@ -604,7 +599,6 @@ namespace Algoritmo_Genetico_Visual1
             }
             return Math.Sqrt(sumatoria / (poblacion1.Count - 1));
         }
-
         static List<double> CruceImpar(double padre1, double padre2)
         {
             List<double> hijos = new List<double>();
@@ -612,7 +606,6 @@ namespace Algoritmo_Genetico_Visual1
             hijos.Add(media);
             return hijos;
         }
-
         public static double CalcularVPN(double Inversion, double[] FNE, double VS, double TMAR, int Periodo)
         {
             double FNEAcumulado = 0, fVPN = 0;
@@ -645,6 +638,7 @@ namespace Algoritmo_Genetico_Visual1
             return fVPN;
         }
 
+
         /*Optimiazacion de  FLUJOS NETOS DE EFECTIVO (inversion, poblacion, VS, Tir , periodo);*/
         static List<double> fxFNE(double Inversion, List<List<double>> poblacion, double VS, double tir, int Periodo)
         {
@@ -658,7 +652,6 @@ namespace Algoritmo_Genetico_Visual1
             }
             return ResultadosFX;
         }
-
         static List<List<double>> SeleccionFNE(List<int> p1, List<int> p2, List<double> ResultadosFX, List<List<double>> poblacion, double FNEMax)
         {
             List<List<double>> padre = new List<List<double>>();
