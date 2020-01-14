@@ -639,7 +639,7 @@ namespace Algoritmo_Genetico_Visual1
         }
 
 
-        /*Optimiazacion de  FLUJOS NETOS DE EFECTIVO (inversion, poblacion, VS, Tir , periodo);*/
+        /*Optimiazacion de  FLUJOS NETOS DE EFECTIVO*/
         static List<double> fxFNE(double Inversion, List<List<double>> poblacion, double VS, double tir, int Periodo)
         {
             List<double> ResultadosFX = new List<double>();
